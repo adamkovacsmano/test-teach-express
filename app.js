@@ -56,13 +56,21 @@ app.post("/api/v1/todos", (req, res) => {
   }
 });
 
-// app.delete("/api/v1/todos/:id", (req, res) => {
-
-//  db.map((todo, index) => {
-//    if (todo.id === id) {
-
-//    }
-//  })
-// })
+app.delete("/api/v1/todos/:id", (req, res) => {
+  db.map((todo, index) => {
+    if (todo.id === id) {
+      const todo = db.splice(index, 1);
+      return res.status(200).send({
+        success: "true",
+        message: "item deleted",
+        todo
+      });
+    }
+  });
+  return res.status(404)({
+    success: "false",
+    message: "cannot find"
+  });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
